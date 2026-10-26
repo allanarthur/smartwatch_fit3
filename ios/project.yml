@@ -1,0 +1,51 @@
+# XcodeGen: `xcodegen generate` cria Fit3Link.xcodeproj (gerado no CI; não versionar).
+name: Fit3Link
+options:
+  bundleIdPrefix: dev.fit3link
+  deploymentTarget:
+    iOS: "17.0"   # iPhone 15 vem com iOS 17 ou superior
+  createIntermediateGroups: true
+
+packages:
+  Fit3Kit:
+    path: Fit3Kit
+
+settings:
+  base:
+    SWIFT_VERSION: "5.0"
+    MARKETING_VERSION: "0.1.0-iphone15"
+    CURRENT_PROJECT_VERSION: "1"
+
+targets:
+  Fit3Link:
+    type: application
+    platform: iOS
+    scheme: {}
+    sources:
+      - path: App
+    dependencies:
+      - package: Fit3Kit
+    info:
+      path: App/Info.plist
+      properties:
+        CFBundleDisplayName: Fit3 Link
+        CFBundleDevelopmentRegion: pt-BR
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        UILaunchScreen: {}
+        UISupportedInterfaceOrientations: [UIInterfaceOrientationPortrait]
+        NSBluetoothAlwaysUsageDescription: O Fit3 Link usa o Bluetooth para conectar à sua Galaxy Fit3 e enviar notificações e chamadas.
+        NSAppleMusicUsageDescription: O Fit3 Link usa o Apple Music para mostrar a música atual na pulseira e controlar a reprodução pelos botões dela.
+        NSHealthUpdateUsageDescription: O Fit3 Link grava no Apple Saúde os passos, batimentos, oxigênio e sono medidos pela sua Galaxy Fit3.
+        NSHealthShareUsageDescription: O Fit3 Link não lê dados do Apple Saúde; esta permissão só acompanha a gravação.
+        NSLocationWhenInUseUsageDescription: O Fit3 Link usa sua localização aproximada para mostrar o clima da sua cidade na pulseira.
+        # bluetooth-central: reconexão e restauração em segundo plano.
+        # audio: só para o modo opcional "Manter ativo em segundo plano" (alertas de chamada).
+        UIBackgroundModes: [bluetooth-central, audio]
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: dev.fit3link.app
+        TARGETED_DEVICE_FAMILY: "1"
+        CODE_SIGN_STYLE: Automatic
+        # Com um Mac: defina seu Personal Team aqui (Apple ID grátis serve).
+        DEVELOPMENT_TEAM: ""
